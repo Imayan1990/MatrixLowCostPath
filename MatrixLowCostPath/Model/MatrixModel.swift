@@ -51,7 +51,7 @@ private func pathOutput(_ input:[[Int]],path:[Int],maximumCost:Int)->(Bool,Int,[
         }
         
     }
-    print(" the sum and outputPathis \(sum):\(outputPath)")
+    
     return (true,sum,outputPath)
 }
 
@@ -118,7 +118,7 @@ private func pathOfLowestCost(_ input:[[Int]],pathCost:[[Int]])->[Int]{
         column -= 1
     }
     path[0] = row + 1
-     print(" the path is \(path)")
+    
     return path
 }
 
@@ -133,34 +133,42 @@ private func calculatePathCost(_ input:[[Int]])->[[Int]]{
     for i in 0...numberOfRows - 1{
         pathCost[i][0] = input[i][0]
     }
-    
-    for column in 1...numberOfColumn - 1 {
-        //Find the next cell to traverse through
-        for row in 0...numberOfRows - 1{
-            candidateRow = row
-            //If the cell is not in the first row, check if the left upper diagonal cell has a value greater
-            //than the cell in the left adjacent cell
-            if row > 0 && pathCost[row - 1][column - 1] < pathCost[candidateRow][column - 1]{
-                candidateRow = row - 1
+    if (numberOfColumn == 1) && numberOfRows > 0 {
+        
+        print("the  number row is \(numberOfRows) and the number of column is \(numberOfColumn)")
+        
+        
+    } else
+    {
+        for column in 1...numberOfColumn - 1 {
+            //Find the next cell to traverse through
+            for row in 0...numberOfRows - 1{
+                candidateRow = row
+                //If the cell is not in the first row, check if the left upper diagonal cell has a value greater
+                //than the cell in the left adjacent cell
+                if row > 0 && pathCost[row - 1][column - 1] < pathCost[candidateRow][column - 1]{
+                    candidateRow = row - 1
+                }
+                //If the cell is in the first row, check if the left diagonal cell in the last row has a value greater than the left adjacent cell
+                if row == 0 && pathCost[numberOfRows - 1][column - 1] < pathCost[candidateRow][column - 1]{
+                    candidateRow = numberOfRows - 1
+                }
+                //If the cell is not in the last row, check if the left lower diagonal cell has a value greater than the current lowest cost cell
+                if row < numberOfRows - 1 && pathCost[row + 1][column - 1] < pathCost[candidateRow][column - 1]{
+                    candidateRow = row + 1
+                }
+                //If the cell is in the last row, check if the left diagonal cell in the first row has a value greater than the current lowest cost cell
+                if row == numberOfRows - 1 && pathCost[0][column - 1] < pathCost[candidateRow][column - 1]{
+                    candidateRow = 0
+                }
+                //set the next value of the current pathCost cell to be equal to the sum of the lowest cost cell and the current cell
+                
+                pathCost[row][column] = pathCost[candidateRow][column - 1] + input[row][column]
+                print("row is\(row) \(column)")
+                print(pathCost[row][column])
             }
-            //If the cell is in the first row, check if the left diagonal cell in the last row has a value greater than the left adjacent cell
-            if row == 0 && pathCost[numberOfRows - 1][column - 1] < pathCost[candidateRow][column - 1]{
-                candidateRow = numberOfRows - 1
-            }
-            //If the cell is not in the last row, check if the left lower diagonal cell has a value greater than the current lowest cost cell
-            if row < numberOfRows - 1 && pathCost[row + 1][column - 1] < pathCost[candidateRow][column - 1]{
-                candidateRow = row + 1
-            }
-            //If the cell is in the last row, check if the left diagonal cell in the first row has a value greater than the current lowest cost cell
-            if row == numberOfRows - 1 && pathCost[0][column - 1] < pathCost[candidateRow][column - 1]{
-                candidateRow = 0
-            }
-            //set the next value of the current pathCost cell to be equal to the sum of the lowest cost cell and the current cell
-           
-            pathCost[row][column] = pathCost[candidateRow][column - 1] + input[row][column]
         }
     }
-    
     return pathCost
 }
 

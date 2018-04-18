@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController{
     
-    
+    //  Lazy variable which usd to get the number of rows and columns (closure)
+    //  inputAlert variable of type UIAlertController
     private lazy var inputAlert:UIAlertController = {
         let inputAlert = UIAlertController(title: "Input the number of rows and columns", message: nil, preferredStyle: .alert)
         inputAlert.addTextField(configurationHandler: {(numberOfRowsTextField) in
@@ -25,14 +26,14 @@ class ViewController: UIViewController{
         return inputAlert
     }()
     
-    
+    // Lazy variable which is used to get he collection view
+    // inputOutputCollectionView variable of type UICollectionView
     private lazy var inputOutputCollectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 44, height: 44)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.clear
-        collectionView.isScrollEnabled = true
         return collectionView
     }()
     
@@ -42,6 +43,16 @@ class ViewController: UIViewController{
     fileprivate let pathCompletedLabel = UILabel()
     fileprivate let pathLabel = UILabel()
     
+    /*
+     Notifies the view controller that its view was added to a view hierarchy.
+     You can override this method to perform additional tasks associated with presenting the view.
+     If you override this method, you must call super at some point in your implementation.
+     
+     - parameter
+     - animated :If true, the view was added to the window using an animation
+     
+     
+     */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showInputAlert()
@@ -50,7 +61,6 @@ class ViewController: UIViewController{
         view.addSubview(pathCompletedLabel)
         view.addSubview(pathLabel)
         view.backgroundColor = UIColor.green
-     inputOutputCollectionView.showsHorizontalScrollIndicator = true
         let priority = UILayoutPriority(1000)
         inputOutputCollectionView.setTopInSuperview(65,priority:priority)
         inputOutputCollectionView.setLeadingInSuperview(0,priority:priority)
@@ -78,6 +88,10 @@ class ViewController: UIViewController{
         pathLabel.setWidthConstraint(200, priority: priority)
         pathLabel.setHeightConstraint(44, priority: priority)
     }
+    
+    
+    // Method show an alert when user provide input with appropriate message,if any
+    // No input parameter
     private func showInputAlert(){
         inputAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned inputAlert] Void in
             guard let numberOfRowsText = inputAlert.textFields?[0].text, let numberOfRows = Int(numberOfRowsText),numberOfRows > 1 || numberOfRows <= 10 else{
@@ -88,12 +102,14 @@ class ViewController: UIViewController{
                 self.showWarningAlert("Enter a number of columns that is minimum 1")
                 return
             }
-         
+            
             self.inputArray = Array(repeating: Array(repeating: 0, count: numberOfColumns), count: numberOfRows)
             self.inputOutputCollectionView.reloadData()
         }))
         self.present(inputAlert, animated: true, completion: nil)
     }
+    
+    // Method show Error Mesage when user enter incorrect input
     private func showWarningAlert(_ message:String){
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .cancel, handler: {[unowned self] (_)->Void in
@@ -103,10 +119,15 @@ class ViewController: UIViewController{
         self.present(alert, animated: true, completion:nil)
     }
 }
-
+/*
+ Keeps track the user input using textFieldDidEndEditing and throw warning/Error message if any
+ MARK : - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate inherited
+ 
+ */
 extension ViewController:UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate{
-   
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
+        print(textField.text)
         guard let text = textField.text,let value = Int(text) else{
             showWarningAlert("\(String(describing: textField.text!)) is not valid number.please enter int values")
             return
@@ -135,6 +156,17 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegateFlow
             cell.contentView.layer.borderWidth = 2
         }
     }
+    
+    /*
+     MARK: - Asks your data source object for the cell that corresponds to the specified item in the collection view.
+     
+     - Parameters:
+     - collectionView:The collection view requesting this information.
+     - indexPath: The index path that specifies the location of the item.
+     - Returns:
+     -cell: A configured cell object. You must not return nil from this method.
+     */
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         cell.inputTextField.text = String(self.inputArray[indexPath.row][indexPath.section])
@@ -142,15 +174,68 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegateFlow
         return cell
     }
     
+    /*
+     MARK: - Asks your data source object for the number of items in the specified section.
+     
+     - Parameters:
+     - collectionView: The collection view requesting this information.
+     - section: An index number identifying a section in collectionView. This index value is 0-based.
+     - Returns:
+     - inputArray.Count Count of an Array .The number of rows in section.
+     
+     */
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.inputArray.count
     }
+    
+    
+    /*
+     Asks your data source object for the number of sections in the collection view.
+     If you do not implement this method, the collection view uses a default value of 1.
+     
+     - Parameters:
+     - collectionView- The collection view requesting this information.
+     - Returns:
+     - inputArray[0].count .The number of sections in collectionView.
+     
+     */
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return self.inputArray[0].count
     }
+    
+    /*
+     MARK :- Asks the delegate for the margins to apply to content in the specified section.
+     
+     - Parameters:
+     - collectionView: The collection view object displaying the flow layout.
+     - collectionViewLayout: The layout object requesting the information.
+     - section:- The index number of the section whose insets are needed.
+     - Returns:
+     - The margins to apply to items in the section.
+     
+     
+     */
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0, 0, 1)
     }
+    /*
+     
+     MARKS : - Asks the delegate for the spacing between successive items in the rows or columns of a section.
+     
+     - Parameters:
+     - collectionView: The collection view object displaying the flow layout.
+     - collectionViewLayout: The layout object requesting the information.
+     - section: The index number of the section whose inter-item spacing is needed.
+     - Returns
+     - The minimum space (measured in points) to apply between successive items in the lines of a section.
+     
+     
+     
+     */
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }

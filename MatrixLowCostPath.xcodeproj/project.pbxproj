@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9319C5C82087DEAC00D9F77C /* Screen Shot 2018-04-11 at 2.32.41 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 9319C5C72087DEAC00D9F77C /* Screen Shot 2018-04-11 at 2.32.41 AM.png */; };
+		9319C5CA2087DEB200D9F77C /* Screen Shot 2018-04-11 at 2.28.35 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 9319C5C92087DEB100D9F77C /* Screen Shot 2018-04-11 at 2.28.35 AM.png */; };
 		93B0F47C207D700A00C8AD5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B0F47B207D700A00C8AD5D /* AppDelegate.swift */; };
 		93B0F47E207D700A00C8AD5D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B0F47D207D700A00C8AD5D /* ViewController.swift */; };
 		93B0F481207D700A00C8AD5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B0F47F207D700A00C8AD5D /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9319C5C72087DEAC00D9F77C /* Screen Shot 2018-04-11 at 2.32.41 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2018-04-11 at 2.32.41 AM.png"; sourceTree = "<group>"; };
+		9319C5C92087DEB100D9F77C /* Screen Shot 2018-04-11 at 2.28.35 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2018-04-11 at 2.28.35 AM.png"; sourceTree = "<group>"; };
 		93B0F478207D700A00C8AD5D /* MatrixLowCostPath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatrixLowCostPath.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B0F47B207D700A00C8AD5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B0F47D207D700A00C8AD5D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				93B0F482207D700A00C8AD5D /* Assets.xcassets */,
 				93B0F484207D700A00C8AD5D /* LaunchScreen.storyboard */,
 				93B0F487207D700A00C8AD5D /* Info.plist */,
+				9319C5C92087DEB100D9F77C /* Screen Shot 2018-04-11 at 2.28.35 AM.png */,
+				9319C5C72087DEAC00D9F77C /* Screen Shot 2018-04-11 at 2.32.41 AM.png */,
 			);
 			path = MatrixLowCostPath;
 			sourceTree = "<group>";
@@ -270,7 +276,9 @@
 			files = (
 				93B0F486207D700A00C8AD5D /* LaunchScreen.storyboard in Resources */,
 				93B0F483207D700A00C8AD5D /* Assets.xcassets in Resources */,
+				9319C5CA2087DEB200D9F77C /* Screen Shot 2018-04-11 at 2.28.35 AM.png in Resources */,
 				93B0F481207D700A00C8AD5D /* Main.storyboard in Resources */,
+				9319C5C82087DEAC00D9F77C /* Screen Shot 2018-04-11 at 2.32.41 AM.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
